@@ -1,12 +1,16 @@
-const sqlite3 = require('sqlite3').verbose();
+const sqlite3 = require("sqlite3").verbose();
+const path = require("path");
 
-// Membuka koneksi ke database SQLite
-const db = new sqlite3.Database('./db/database.db', (err) => {
+// Path ke database
+const DB_PATH = path.join(__dirname, "database.db");
+
+// Membuka koneksi ke database
+const db = new sqlite3.Database(DB_PATH, (err) => {
   if (err) {
-    console.error("Error opening database: ", err.message);
-  } else {
-    console.log("Connected to the SQLite database.");
+    console.error("Error connecting to SQLite:", err.message);
+    process.exit(1); // Keluar jika koneksi gagal
   }
+  console.log("Connected to SQLite database.");
 });
 
 module.exports = db;
